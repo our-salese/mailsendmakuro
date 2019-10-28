@@ -1,0 +1,27 @@
+function createmail1() {
+  var ss = SpreadsheetApp.getActiveSheet();
+  
+  var mailaddres=ss.getRange(2,5,ss.getLastRow()-1).getValues();
+  
+  var name=ss.getRange(2,4,ss.getLastRow()-1).getValues();
+  
+  var msg=Browser.msgBox('"定型文A:御社の商品(商品名)に感銘を受けました〜"を送信してよろしいですか？',Browser.Buttons.OK_CANCEL);
+  Browser.msgBox(msg);
+  
+  for(var i=0, l=mailaddres.length; i<l; i++){
+    var subject=ss.getRange(2, 10).getValues();
+    var body='Dear '+ss.getRange(i+2, 4).getValues()+'\n\n';
+        body += ss.getRange(4,10).getValues()+'\n';
+        body += ss.getRange(5,10).getValues();
+        body += ss.getRange(i+2,6).getValues();
+        body += ss.getRange(5,12).getValues()+'\n';
+        body += ss.getRange(6, 10).getValues()+'\n\n';
+        body += ss.getRange(8,10).getValues();
+    
+    GmailApp.createDraft(
+      mailaddres[i],
+      subject,
+      body)
+  
+  }
+}
